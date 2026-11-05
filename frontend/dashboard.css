@@ -1,6 +1,11 @@
 /*
  * Everon Call Dashboard — dashboard.css
- * Version: 1.0.0
+ * Version: 1.1.0
+ *
+ * Changes in v1.1.0:
+ *   Wallboard text colour fix — titles, KPI values and agent names were
+ *   inheriting the light-theme ink from :root and were unreadable on the dark
+ *   wallboard background.
  *
  * What this file does (v1.0.0):
  *   Styles for the signed-in dashboard (light/dark follows the device) and the
@@ -33,6 +38,7 @@
   }
 }
 .wallboard {
+  color: var(--ink);
   --bg: #0d0d0c; --surface: #1a1a19; --ink: #f2f2ee; --ink-2: #c3c2b7; --ink-3: #8f8e86;
   --line: #2c2c2a; --empty: #232321; --accent: #6ea0ff;
 }

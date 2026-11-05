@@ -1,0 +1,34 @@
+{
+  "$comment": "Everon Call Dashboard — staticwebapp.config.json v1.1.0. Entra sign-in (single tenant, custom registration — needs the Standard plan) for the dashboard and /api/data. The wallboard page and /api/wallboard are anonymous at the platform level; /api/wallboard enforces its own key + office-IP check. Replace <TENANT_ID> with Everon's Entra tenant ID.",
+  "platform": { "apiRuntime": "node:20" },
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/<TENANT_ID>/v2.0",
+          "clientIdSettingName": "AAD_CLIENT_ID",
+          "clientSecretSettingName": "AAD_CLIENT_SECRET"
+        }
+      }
+    }
+  },
+  "routes": [
+    { "route": "/.auth/login/github", "statusCode": 404 },
+    { "route": "/.auth/login/twitter", "statusCode": 404 },
+    { "route": "/wallboard.html", "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/dashboard.css", "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/dashboard.js", "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/api/wallboard", "methods": ["GET"], "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/api/*", "allowedRoles": ["authenticated"] },
+    { "route": "/*", "allowedRoles": ["authenticated"] }
+  ],
+  "responseOverrides": {
+    "401": { "redirect": "/.auth/login/aad?post_login_redirect_uri=.referrer", "statusCode": 302 }
+  },
+  "globalHeaders": {
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Cache-Control": "no-cache"
+  }
+}

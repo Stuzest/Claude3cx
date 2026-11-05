@@ -1,6 +1,11 @@
 /*
  * Everon Call Dashboard — dashboard.js
- * Version: 1.0.0
+ * Version: 1.1.0
+ *
+ * Changes in v1.1.0:
+ *   If a dashboard refresh fails because the sign-in session expired (Static
+ *   Web Apps redirects the API call to the login page), send the browser to
+ *   sign in again instead of showing the error banner forever.
  *
  * What this file does (v1.0.0):
  *   Fetches the summary and draws the four views:
@@ -176,10 +181,21 @@
     return res.json();
   }
 
+  async function sessionExpired() {
+    try {
+      const me = await (await fetch('/.auth/me', { cache: 'no-store' })).json();
+      return !me.clientPrincipal;
+    } catch { return false; }
+  }
+
   async function tick() {
     try {
       render(await load());
     } catch (err) {
+      if (MODE === 'dashboard' && err instanceof TypeError && navigator.onLine && await sessionExpired()) {
+        location.href = '/.auth/login/aad?post_login_redirect_uri=/';
+        return;
+      }
       const b = $('#banner');
       b.textContent = `Couldn't refresh: ${err.message}. Showing the last data received.`;
       b.classList.add('show');

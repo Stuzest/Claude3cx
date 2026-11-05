@@ -1,0 +1,10 @@
+{
+  "name": "everon-call-dashboard-api",
+  "version": "1.1.0",
+  "description": "Azure Functions backend for the Everon 3CX call dashboard",
+  "private": true,
+  "main": "src/functions/*.js",
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node --test test/*.test.js" },
+  "dependencies": { "@azure/functions": "^4.5.0" }
+}

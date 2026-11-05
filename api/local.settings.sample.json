@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "THREECX_URL": "https://yourpbx.3cx.co.uk",
+    "THREECX_CLIENT_ID": "dashboard",
+    "THREECX_CLIENT_SECRET": "<API key>",
+    "QUEUE_NUMBERS": "8006",
+    "ANSWERING_SERVICE_NUMBERS": "",
+    "ALLOWED_EMAIL_DOMAINS": "everon.co.uk",
+    "WALLBOARD_KEY": "<at least 32 random characters>",
+    "WALLBOARD_ALLOWED_IPS": "203.0.113.10/32"
+  }
+}
