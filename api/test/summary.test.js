@@ -32,7 +32,7 @@ global.fetch = async (url) => {
   const u = new URL(url);
   const json = (b) => ({ ok: true, status: 200, json: async () => b, text: async () => JSON.stringify(b) });
   if (u.pathname === '/connect/token') return json({ access_token: 't', expires_in: 3600 });
-  if (u.pathname.endsWith('/Queues')) return json({ value: [{ Number: '8006', Agents: [{ Number: '7504', Name: 'Henry Sanderson' }, { Number: '7506', Name: 'Matt Despy' }] }] });
+  if (u.pathname.endsWith('/Queues')) return json({ value: [{ Number: '8006', Agents: [{ Number: '7504', Name: 'Agent One' }, { Number: '7506', Name: 'Agent Two' }] }] });
   if (u.pathname.endsWith('/Users')) return json({ value: [{ Number: '7504', QueueStatus: 'LoggedIn' }, { Number: '7506', QueueStatus: 'LoggedOut' }] });
   if (u.pathname.endsWith('/CallHistoryView')) {
     const skip = Number(u.searchParams.get('$skip') || 0);
@@ -55,8 +55,8 @@ test('summary counts only inbound queue calls and splits missed', async () => {
   assert.strictEqual(s.period.total, 3);
   assert.strictEqual(s.hourly.length, 5 * s.hours.length);
   assert.ok(s.daily.every((d) => d.dow >= 1 && d.dow <= 5));
-  const henry = s.agents.find((a) => a.number === '7504');
-  assert.strictEqual(henry.loggedIn, true);
+  const one = s.agents.find((a) => a.number === '7504');
+  assert.strictEqual(one.loggedIn, true);
   assert.strictEqual(s.agents[0].number, '7504'); // logged-in first
   assert.strictEqual(s.agents.find((a) => a.number === '7506').loggedIn, false);
   for (const k of ['version', 'generatedAt', 'timezone', 'lookbackDays', 'thresholds', 'outOfHours', 'agentsError']) assert.ok(k in s, k);
