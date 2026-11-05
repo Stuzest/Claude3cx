@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  Everon Call Dashboard — index.html (signed-in dashboard)
+  Version: 1.0.0
+  What this file does (v1.0.0):
+    Page shell for the four views. Requires Entra sign-in (enforced by
+    staticwebapp.config.json). Data comes from /api/data.
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Everon Call Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+</head>
+<body data-mode="dashboard">
+  <header class="top">
+    <h1><span class="brand">Everon</span> Helpdesk · Call Dashboard</h1>
+    <div class="meta"><div class="clock" id="clock"></div><div id="updated">Loading…</div></div>
+  </header>
+  <main>
+    <div class="banner" id="banner" role="alert"></div>
+    <div class="kpis" id="kpis"></div>
+    <section class="card">
+      <h2>Busiest hours</h2>
+      <p class="desc" id="desc-volume"></p>
+      <div id="volume"></div>
+      <div class="legend" id="legend-volume"></div>
+    </section>
+    <section class="card">
+      <h2>Missed calls by hour</h2>
+      <p class="desc" id="desc-missed"></p>
+      <div id="missed"></div>
+      <div class="legend" id="legend-missed"></div>
+    </section>
+    <section class="card">
+      <h2>Daily calls &amp; missed</h2>
+      <p class="desc">Each working day: total inbound calls and how many were missed, coloured by % missed. Today is outlined.</p>
+      <div id="daily"></div>
+      <div class="legend" id="legend-daily"></div>
+    </section>
+    <section class="card">
+      <h2>Agents</h2>
+      <p class="desc">Support queue login status (live) and inbound calls answered today.</p>
+      <div id="agents"></div>
+    </section>
+  </main>
+  <footer>Data: 3CX call history, refreshed every 15 minutes. Agent status refreshed every minute.</footer>
+  <script src="dashboard.js"></script>
+</body>
+</html>
